@@ -6,15 +6,22 @@ import './App.css';
 
 const App = () => (
   <Router>
-    {/* <React.Fragment>
+    <React.Fragment>
       <ul style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
         <li>
-          <NavLink to="/01" activeClassName="link--active">CreateElement</NavLink>
+          <NavLink to="/01" activeClassName="link--active">Compound Components</NavLink>
         </li>
         <li>
-          <NavLink to="/02" activeClassName="link--active">First JSX</NavLink>
+          <NavLink to="/02" activeClassName="link--active">Context</NavLink>
+        </li>
+        <li>
+          <NavLink to="/03" activeClassName="link--active">Higher Order</NavLink>
+        </li>
+        <li>
+          <NavLink to="/04" activeClassName="link--active">Optimize Render</NavLink>
         </li>
       </ul>
+      <hr />
       {routes.map(route => (
         <Route
           path={route.path}
@@ -23,7 +30,7 @@ const App = () => (
           )}
         />
       ))}
-    </React.Fragment> */}
+    </React.Fragment>
   </Router>
 );
 

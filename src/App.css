@@ -1,5 +1,5 @@
 body {
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-align: center;
 }
 
@@ -18,4 +18,16 @@ ul {
 
 .link--active {
   color: red;
+}
+
+
+/* 03-HigherOrder */
+.container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 100px;
+  left: 0px;
+  padding: 0 20px;
+  cursor: url(./images/mouse.png), auto;
 }
