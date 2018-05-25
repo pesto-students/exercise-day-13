@@ -5,8 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "cd Problems && jest",
     "precommit": "lint-staged"
   },
   "dependencies": {

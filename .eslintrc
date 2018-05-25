@@ -10,6 +10,7 @@
       "react/no-multi-comp": 0
     },
     "env": {
-      "browser": true
+      "browser": true,
+      "jest": true
     }
   }

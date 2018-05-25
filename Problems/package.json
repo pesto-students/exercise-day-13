@@ -1,0 +1,13 @@
+{
+  "name": "Problems",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^23.0.0"
+  }
+}
