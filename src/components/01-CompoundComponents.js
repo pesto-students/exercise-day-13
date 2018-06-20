@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 class RadioGroup extends React.Component {
   static propTypes = {
-    // defaultValue: PropTypes.string,                UN-COMMENT THIS LINE
+    // defaultValue: PropTypes.string,
     children: PropTypes.shape().isRequired,
   };
   render() {
@@ -31,16 +31,19 @@ class RadioGroup extends React.Component {
   }
 }
 
+// RadioGroup.defaultProps = { defaultValue: 'fm' };
+
 class RadioOption extends React.Component {
   static propTypes = {
-    // value: PropTypes.string,                       UN-COMMENT THIS LINE
+    // value: PropTypes.string.isRequired,
     children: PropTypes.shape().isRequired,
+    isSelected: PropTypes.bool.isRequired,
   };
 
   render() {
     return (
       <div>
-        <RadioIcon isSelected={false} /> {this.props.children}
+        <RadioIcon isSelected={this.props.isSelected} /> {this.props.children}
       </div>
     );
   }
@@ -70,16 +73,24 @@ class RadioIcon extends React.Component {
 }
 
 class CompoundComponents extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: 'fm' };
+    this.onSelectHandler = this.onSelectHandler.bind(this);
+  }
+  onSelectHandler(e) {
+    this.setState({ value: e.target.value });
+  }
   render() {
     return (
       <div>
         <h1>♬ It is about time that we all turned off the radio ♫</h1>
 
-        <RadioGroup defaultValue="fm">
-          <RadioOption value="am">AM</RadioOption>
-          <RadioOption value="fm">FM</RadioOption>
-          <RadioOption value="tape">Tape</RadioOption>
-          <RadioOption value="aux">Aux</RadioOption>
+        <RadioGroup defaultValue="fm" value={this.state.value}>
+          <RadioOption value="am" isSelected={this.state.value === 'am'}>AM</RadioOption>
+          <RadioOption value="fm" isSelected={this.state.value === 'fm'}>FM</RadioOption>
+          <RadioOption value="tape" isSelected={this.state.value === 'tape'}>Tape</RadioOption>
+          <RadioOption value="aux" isSelected={this.state.value === 'aux'}>Aux</RadioOption>
         </RadioGroup>
       </div>
     );
