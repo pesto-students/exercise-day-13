@@ -16,17 +16,32 @@
     - Arrow left, arrow up should select the previous option
 */
 
+
+/* eslint-disable */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 class RadioGroup extends React.Component {
   static propTypes = {
-    // defaultValue: PropTypes.string,
+    defaultValue: PropTypes.string,
     children: PropTypes.shape().isRequired,
+    onChange: PropTypes.func.isRequired,
   };
+
+  static defaultProps = {
+    defaultValue: 'fm',
+  }
   render() {
     return (
-      <div>{this.props.children}</div>
+      <div>
+        {this.props.children.map((element) => {
+          return React.cloneElement(element, {
+            isSelected: this.props.defaultValue,
+            onSelectCallback: value => this.props.onChange(value),
+          });
+        })}
+      </div>
     );
   }
 }
@@ -35,15 +50,21 @@ class RadioGroup extends React.Component {
 
 class RadioOption extends React.Component {
   static propTypes = {
-    // value: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     children: PropTypes.shape().isRequired,
     isSelected: PropTypes.bool.isRequired,
+    onSelectCallback: PropTypes.func.isRequired,
   };
+
+  iconCallbackHandler = () => {
+    this.props.onSelectCallback(this.props.value);
+  }
 
   render() {
     return (
       <div>
-        <RadioIcon isSelected={this.props.isSelected} /> {this.props.children}
+        <RadioIcon isSelected={this.props.isSelected === this.props.value} iconCallback={this.iconCallbackHandler} />
+        {this.props.children}
       </div>
     );
   }
@@ -52,11 +73,17 @@ class RadioOption extends React.Component {
 class RadioIcon extends React.Component {
   static propTypes = {
     isSelected: PropTypes.bool.isRequired,
+    iconCallback: PropTypes.func.isRequired,
   };
+
+  onClickHandler = () => {
+    this.props.iconCallback();
+  }
 
   render() {
     return (
       <div
+        onClick = {this.onClickHandler}
         style={{
           borderColor: '#ccc',
           borderWidth: 3,
@@ -65,7 +92,7 @@ class RadioIcon extends React.Component {
           width: 16,
           display: 'inline-block',
           cursor: 'pointer',
-          background: this.props.isSelected ? 'rgba(0, 0, 0, 0.05)' : '',
+          background: this.props.isSelected ? 'rgba(0, 0, 0)' : '',
         }}
       />
     );
@@ -73,24 +100,24 @@ class RadioIcon extends React.Component {
 }
 
 class CompoundComponents extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: 'fm' };
-    this.onSelectHandler = this.onSelectHandler.bind(this);
+  state = {
+    value: 'fm',
   }
-  onSelectHandler(e) {
-    this.setState({ value: e.target.value });
+
+  onChangeHandler = (value) => {
+    this.setState({ value });
   }
+
   render() {
     return (
       <div>
         <h1>♬ It is about time that we all turned off the radio ♫</h1>
 
-        <RadioGroup defaultValue="fm" value={this.state.value}>
-          <RadioOption value="am" isSelected={this.state.value === 'am'}>AM</RadioOption>
-          <RadioOption value="fm" isSelected={this.state.value === 'fm'}>FM</RadioOption>
-          <RadioOption value="tape" isSelected={this.state.value === 'tape'}>Tape</RadioOption>
-          <RadioOption value="aux" isSelected={this.state.value === 'aux'}>Aux</RadioOption>
+        <RadioGroup defaultValue={this.state.value} onChange={this.onChangeHandler}>
+          <RadioOption value="am">AM</RadioOption>
+          <RadioOption value="fm">FM</RadioOption>
+          <RadioOption value="tape">Tape</RadioOption>
+          <RadioOption value="aux">Aux</RadioOption>
         </RadioGroup>
       </div>
     );
