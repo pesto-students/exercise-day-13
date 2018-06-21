@@ -71,7 +71,7 @@ class Context extends React.Component {
             <TextInput name="lastName" placeholder="Last Name" />
           </p>
           <p>
-            <SubmitButton>Submit</SubmitButton>
+            <SubmitButton onClick={console.log('hello')}>Submit</SubmitButton>
           </p>
         </Form>
       </div>
