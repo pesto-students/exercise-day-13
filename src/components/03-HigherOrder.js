@@ -9,7 +9,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function withMouse(Component) {
-  return Component;
+  return class WithMouse extends React.Component {
+    state = {
+      mouse: { x: 0, y: 0 },
+    }
+
+    componentDidMount() {
+      document.addEventListener('mousemove', this.onMouseMove);
+    }
+
+    onMouseMove = (event) => {
+      this.setState({
+        mouse: {
+          x: event.clientX,
+          y: event.clientY,
+        },
+      });
+    }
+
+    render() {
+      return (<Component mouse={this.state.mouse} />);
+    }
+  };
 }
 
 class App extends React.Component {
