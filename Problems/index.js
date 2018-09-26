@@ -38,7 +38,18 @@ function last(args) {
  * output: true if 3 points form a line else false.
  */
 
-function line() {}
+function line(a) {
+  const x1 = a[0][0];
+  const x2 = a[1][0];
+  const x3 = a[2][0];
+
+  const y1 = a[0][1];
+  const y2 = a[1][1];
+  const y3 = a[2][1];
+
+  const area = (x1 * (y2 - y3)) + (x2 * (y3 - y1)) + (x3 * (y1 - y2));
+  return (area === 0);
+}
 
 /* Q4 (*)
  * Returns the position of the last occurrence of an item in an array, or -1 if
