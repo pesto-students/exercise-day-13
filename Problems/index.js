@@ -7,7 +7,11 @@
  *      join('|', [1, 2, 3]);    //=> '1|2|3'
  */
 
-function join() {}
+function join(...args) {
+  const sign = args[0];
+  const arr = args[1];
+  return arr.join(sign);
+}
 
 /* Q2 (*)
  * Returns the last element of the given list or string.
