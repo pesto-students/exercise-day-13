@@ -19,7 +19,8 @@ function join() {}
  *     last(''); //=> ''
  */
 
-function last() {}
+function last() {
+}
 
 /* Q3
  * Determine if an array of 3 points form a straight line.
@@ -27,9 +28,19 @@ function last() {}
  * input: 3 points of the form [[x1,y1],[x2,y2],[x3,y3]]
  *
  * output: true if 3 points form a line else false.
+ * Solution: if 3 points fall on the same line then area
+ * of the triangle formed by them will be zero
  */
-
-function line() {}
+/*eslint-disable*/
+function line(arr) {
+  const [x1, y1] = arr[0];
+  const [x2, y2] = arr[1];
+  const [x3, y3] = arr[2];
+  if (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2) === 0) {
+    return true;
+  }
+  return false;
+}
 
 /* Q4 (*)
  * Returns the position of the last occurrence of an item in an array, or -1 if
