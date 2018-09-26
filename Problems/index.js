@@ -60,7 +60,13 @@ function line(a) {
  *    lastIndexOf(10, [1,2,3,4]); //=> -1
  */
 
-function lastIndexOf() {}
+function lastIndexOf(...args) {
+  const i = args[1].reverse().indexOf(args[0]);
+  if (i === -1) {
+    return i;
+  }
+  return args[1].length - i - 1;
+}
 
 /* Q5
  * input: non-empty array of positive integers.
