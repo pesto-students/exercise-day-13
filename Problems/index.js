@@ -23,7 +23,12 @@ function join(...args) {
  *     last(''); //=> ''
  */
 
-function last() {}
+function last(args) {
+  if (args instanceof Array && args.length === 0) {
+    return undefined;
+  }
+  return args.toString().charAt(args.length);
+}
 
 /* Q3
  * Determine if an array of 3 points form a straight line.
