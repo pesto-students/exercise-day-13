@@ -51,16 +51,54 @@ function line(arr) {
  *    lastIndexOf(10, [1,2,3,4]); //=> -1
  */
 
-function lastIndexOf() {}
+function lastIndexOf(num,arr) {
+  return arr.reduce((acc,val,index) => {
+    if(val === num){
+      acc = index;
+    }
+    return acc;
+  },-1)
+}
 
 /* Q5
  * input: non-empty array of positive integers.
  *
  * output: true if the Mean and Mode of the input integers
  *         are the same else false.
+ * Sol: generate an object of frequencies and then get the mode
+ * calulate mean and compare the two values
  */
 
-function meanMode() {}
+function meanMode(arr) {
+  const numObj = arr.reduce((acc,val) => {
+    if(val in acc){
+      acc[val] = acc[val] + 1
+    } else{
+      acc[val] = 1;
+    }
+    return acc;
+  },{})
+
+  let temp = Number.NEGATIVE_INFINITY;
+  let mode;
+  for(let key in numObj){
+    if(numObj[key] > temp){
+      temp = numObj[key];
+      mode = key;
+    }
+  }
+    let temp2 = 0;
+    arr.forEach(element => {
+      temp2 += element;
+    });
+    mean = temp2/arr.length;
+    
+    if(mean === mode){
+      return true;
+    }
+    return false;
+  
+}
 
 module.exports = {
   join,
