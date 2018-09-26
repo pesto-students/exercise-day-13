@@ -74,8 +74,25 @@ function lastIndexOf(...args) {
  * output: true if the Mean and Mode of the input integers
  *         are the same else false.
  */
-
-function meanMode() {}
+function findMode(arr) {
+  const obj = {};
+  for (let i = 0; i < arr.length; i += 1) {
+    const ele = arr[i];
+    if (obj[ele]) {
+      obj[ele] += 1;
+    } else {
+      obj[ele] = 1;
+    }
+  }
+  // eslint-disable-next-line
+ return Object.keys(obj).reduce((first, second) => (obj[first] > obj[second])? first : second);
+}
+function meanMode(arr) {
+  const sum = arr.reduce((f, s) => f + s);
+  const mean = sum / arr.length;
+  const mode = findMode(arr);
+  return mean === Number(mode);
+}
 
 module.exports = {
   join,
