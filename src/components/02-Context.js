@@ -18,6 +18,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const FormContext = React.createContext({
+  handleSubmit: () => {},
+  firstName: '',
+  lastName: '',
+  updateInput: () => {},
+});
+
 class Form extends React.Component {
   static propTypes = {
     children: PropTypes.shape().isRequired,
@@ -32,18 +39,32 @@ class SubmitButton extends React.Component {
     children: PropTypes.shape().isRequired,
   }
   render() {
-    return <button>{this.props.children}</button>;
+    return (
+      <FormContext.Consumer>
+        {formActions => (
+          <button onClick={formActions.handleSubmit}>{this.props.children}</button>
+        )}
+
+      </FormContext.Consumer>
+    );
   }
 }
 
 class TextInput extends React.Component {
   render() {
     return (
-      <input
-        type="text"
-        name={this.props.name}
-        placeholder={this.props.placeholder}
-      />
+      <FormContext.Consumer>
+        {formActions => (
+          <input
+            type="text"
+            name={this.props.name}
+            placeholder={this.props.placeholder}
+            value={formActions[this.props.name]}
+            onChange={formActions.updateInput}
+            onKeyPress={formActions.handleSubmit}
+          />
+        )}
+      </FormContext.Consumer>
     );
   }
 }
@@ -54,9 +75,22 @@ TextInput.propTypes = {
 };
 
 class Context extends React.Component {
-  handleSubmit = () => {
-    alert('YOU WIN!');
+  state = {
+    firstName: '',
+    lastName: '',
+  }
+
+  handleSubmit = (event) => {
+    if (event.type === 'click' || (event.type === 'keypress' && event.key.toLowerCase() === 'enter')) {
+      alert(`YOU WIN!\nFirstName: ${this.state.firstName}\nLastName: ${this.state.lastName}`);
+    }
   };
+
+  updateInput = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
 
   render() {
     return (
@@ -65,15 +99,19 @@ class Context extends React.Component {
           This isn&#39;t even my final <code>&lt;Form/&gt;</code>!
         </h1>
 
-        <Form onSubmit={this.handleSubmit}>
-          <p>
-            <TextInput name="firstName" placeholder="First Name" />{' '}
-            <TextInput name="lastName" placeholder="Last Name" />
-          </p>
-          <p>
-            <SubmitButton>Submit</SubmitButton>
-          </p>
-        </Form>
+        <FormContext.Provider
+          value={{ ...this.state, updateInput: this.updateInput, handleSubmit: this.handleSubmit }}
+        >
+          <Form>
+            <p>
+              <TextInput name="firstName" placeholder="First Name" />{' '}
+              <TextInput name="lastName" placeholder="Last Name" />
+            </p>
+            <p>
+              <SubmitButton>Submit</SubmitButton>
+            </p>
+          </Form>
+        </FormContext.Provider>
       </div>
     );
   }
