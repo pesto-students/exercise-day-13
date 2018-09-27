@@ -40,7 +40,7 @@ class RadioOption extends React.Component {
   render() {
     return (
       <div>
-        <RadioIcon isSelected={false} /> {this.props.children}
+        <RadioIcon isSelected={false} {...this.props} /> {this.props.children}
       </div>
     );
   }
@@ -76,7 +76,7 @@ class CompoundComponents extends React.Component {
         <h1>♬ It is about time that we all turned off the radio ♫</h1>
 
         <RadioGroup defaultValue="fm">
-          <RadioOption value="am">AM</RadioOption>
+          <RadioOption value="am" tabIndex="-1">AM</RadioOption>
           <RadioOption value="fm">FM</RadioOption>
           <RadioOption value="tape">Tape</RadioOption>
           <RadioOption value="aux">Aux</RadioOption>
